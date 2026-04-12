@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +26,25 @@ export default function Therapist() {
     speechSynthesis.speak(utterance);
   };
 
-  // ... (startListening stays the same)
+  // 🎙️ Start voice recognition
+  const startListening = () => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Your browser does not support voice recognition.");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setInput((prev) => prev + transcript);
+    };
+    recognition.onerror = (e) => console.error("Speech error:", e.error);
+    recognitionRef.current = recognition;
+    recognition.start();
+  };
 
   // 📤 Send message
   const sendMessage = async () => {
@@ -108,6 +126,7 @@ export default function Therapist() {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           placeholder="Talk or type how you feel..."
           className="flex-1 px-4 py-2 rounded-xl outline-none bg-black/40 border border-red-500/30 text-white placeholder-white/50 focus:ring-2 focus:ring-red-500"
         />
