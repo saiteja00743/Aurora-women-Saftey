@@ -9,12 +9,18 @@ load_dotenv()
 router = APIRouter(prefix="/api/lawbot", tags=["LawBot"])
 
 api_key = os.getenv("OPENROUTER_API_KEY")
-print("[KEY] Loaded API key:", api_key[:10] + "..." if api_key else "[ERROR] Not found")
+print("[KEY] Loaded API key:", api_key[:10] + "..." if api_key else "[ERROR] OPENROUTER_API_KEY not set")
 
-client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=api_key
-)
+# Client initialized lazily to avoid startup crash when env var is missing
+_client = None
+
+def get_client():
+    global _client
+    if _client is None:
+        if not api_key:
+            raise HTTPException(status_code=500, detail="OpenRouter API key not configured on server")
+        _client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
+    return _client
 
 # 🟣 Schema for incoming chat messages
 class Query(BaseModel):
@@ -24,10 +30,7 @@ class Query(BaseModel):
 # 🧠 POST: dynamic Q&A (no storage)
 @router.post("/ask")
 def ask_lawbot(query: Query):
-    if not api_key:
-        print("[ERROR] API key is missing!")
-        raise HTTPException(status_code=500, detail="OpenRouter API key not configured")
-    
+    client = get_client()  # raises HTTPException if key missing
     try:
         print(f"[INFO] Received question: {query.question}")
         

@@ -8,10 +8,16 @@ load_dotenv()
 
 router = APIRouter(prefix="/api/therapist", tags=["Therapist"])
 
-client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY")
-)
+_client = None
+
+def get_client():
+    global _client
+    if _client is None:
+        api_key = os.getenv("OPENROUTER_API_KEY")
+        if not api_key:
+            raise HTTPException(status_code=500, detail="OpenRouter API key not configured on server")
+        _client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=api_key)
+    return _client
 
 class Message(BaseModel):
     role: str
@@ -23,6 +29,7 @@ class TherapistQuery(BaseModel):
 
 @router.post("/chat")
 def therapist_chat(query: TherapistQuery):
+    client = get_client()  # raises HTTPException if key missing
     try:
         # Construct the context for the model including history
         messages = [
