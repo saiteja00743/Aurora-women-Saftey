@@ -5,9 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   preview: {
-    allowedHosts: ["aurora-women-saftey-qgmt.onrender.com"]
+    allowedHosts: ["aurora-women-saftey-xap1.vercel.app", "aurora-women-saftey-1.onrender.com"]
   },
   server: {
-    allowedHosts: ["aurora-women-saftey-qgmt.onrender.com"]
+    allowedHosts: ["aurora-women-saftey-xap1.vercel.app", "aurora-women-saftey-1.onrender.com"]
   }
 })

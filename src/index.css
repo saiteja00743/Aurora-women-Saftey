@@ -5,6 +5,8 @@
 html, body, #root {
   height: 100%;
   margin: 0;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Aurora Gradient */
@@ -19,10 +21,16 @@ html, body, #root {
       #0a0a0a 100%
     );
   background-size: 200% 200%;
-  background-attachment: fixed;
+  background-attachment: scroll;
   background-repeat: no-repeat;
   color: #f0e6e6;
   animation: auroraMove 30s ease-in-out infinite alternate;
+}
+
+@media (min-width: 768px) {
+  .aurora-bg {
+    background-attachment: fixed;
+  }
 }
 
 /* Animation for smooth gradient flow */

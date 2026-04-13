@@ -6,21 +6,21 @@ import im2 from "../assets/im2.jpg";
 export default function Landing({ onGetStarted }) {   // ✅ FIXED — accepts prop
   // --- Animation Hooks ---
   const heroRef = useRef(null);
-  const heroInView = useInView(heroRef, { once: false, margin: "-100px" });
+  const heroInView = useInView(heroRef, { once: false, margin: "-50px" });
   const heroControls = useAnimation();
   useEffect(() => {
     heroInView ? heroControls.start("show") : heroControls.start("hidden");
   }, [heroInView, heroControls]);
 
   const breakRef = useRef(null);
-  const breakInView = useInView(breakRef, { once: false, margin: "-100px" });
+  const breakInView = useInView(breakRef, { once: false, margin: "-50px" });
   const breakControls = useAnimation();
   useEffect(() => {
     breakInView ? breakControls.start("show") : breakControls.start("hidden");
   }, [breakInView, breakControls]);
 
   const whyRef = useRef(null);
-  const whyInView = useInView(whyRef, { once: false, margin: "-100px" });
+  const whyInView = useInView(whyRef, { once: false, margin: "-50px" });
   const whyControls = useAnimation();
   useEffect(() => {
     whyInView ? whyControls.start("show") : whyControls.start("hidden");
@@ -53,7 +53,7 @@ export default function Landing({ onGetStarted }) {   // ✅ FIXED — accepts p
               hidden: { opacity: 0, y: 40 },
               show: { opacity: 1, y: 0, transition: { duration: 1 } },
             }}
-            className="text-6xl font-bold text-white mb-2"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-2"
           >
             Aurora:
           </motion.h1>
@@ -77,7 +77,7 @@ export default function Landing({ onGetStarted }) {   // ✅ FIXED — accepts p
               hidden: { opacity: 0 },
               show: { opacity: 1, transition: { delay: 0.6, duration: 1 } },
             }}
-            className="max-w-2xl text-lg text-white/80 leading-relaxed mb-4"
+            className="max-w-md md:max-w-2xl text-base md:text-lg text-white/80 leading-relaxed mb-4"
           >
             Imagine a woman trapped in silence, enduring daily fear and abuse,
             unable to seek help because her every move is monitored. For
@@ -91,7 +91,7 @@ export default function Landing({ onGetStarted }) {   // ✅ FIXED — accepts p
               hidden: { opacity: 0 },
               show: { opacity: 1, transition: { delay: 0.9, duration: 1 } },
             }}
-            className="max-w-2xl text-lg text-white/80 leading-relaxed mb-8"
+            className="max-w-md md:max-w-2xl text-base md:text-lg text-white/80 leading-relaxed mb-8"
           >
             So introducing <b>Aurora</b> — an AI-powered lifeline, offering
             discreet support, mental health care, and legal guidance to women in
@@ -131,10 +131,10 @@ export default function Landing({ onGetStarted }) {   // ✅ FIXED — accepts p
           >
             {/* TEXT LEFT */}
             <div className="md:w-1/2 space-y-4">
-              <h2 className="text-4xl md:text-5xl font-bold text-white">
+              <h2 className="text-3xl md:text-5xl font-bold text-white">
                 Break the Silence
               </h2>
-              <p className="text-lg text-white/80 leading-relaxed">
+              <p className="text-base md:text-lg text-white/80 leading-relaxed">
                 With Aurora, we’re empowering women to reclaim their voice and
                 safety, regardless of their circumstances. Whether you are a
                 survivor, ally, or advocate, join us in reshaping the future for
@@ -224,11 +224,11 @@ export default function Landing({ onGetStarted }) {   // ✅ FIXED — accepts p
               }}
               className="md:w-1/2 space-y-6"
             >
-              <h2 className="text-5xl md:text-6l font-extrabold text-red-500 mb-6 leading-tight">
+              <h2 className="text-4xl md:text-6xl font-extrabold text-red-500 mb-6 leading-tight">
                 Why Choose Aurora:
               </h2>
 
-              <div className="space-y-6 text-white/85 text-xl leading-relaxed">
+              <div className="space-y-6 text-white/85 text-lg md:text-xl leading-relaxed">
                 <p>
                   <b className="text-red-400">Discreet and Secure:</b> Built
                   with steganography and privacy at its core, Aurora allows
@@ -258,7 +258,7 @@ export default function Landing({ onGetStarted }) {   // ✅ FIXED — accepts p
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.4 }}
             transition={{ duration: 1 }}
-            className="text-5xl md:text-6xl font-bold text-red-500 mb-12"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-red-500 mb-12"
           >
             Aurora is more than an app, It’s a Lifeline!
           </motion.h2>
