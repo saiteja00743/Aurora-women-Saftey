@@ -43,13 +43,11 @@ export default function QuickExit() {
     <motion.button
       onClick={handleQuickExit}
       whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-50 bg-neutral-800/80 hover:bg-neutral-700 backdrop-blur-md text-white/50 hover:text-white px-3 py-2 md:px-4 md:py-3 rounded-2xl flex items-center justify-center gap-2 text-xs md:text-sm font-medium border border-white/10 hover:border-white/30 transition-all shadow-lg"
+      whileTap={{ scale: 0.9 }}
+      className="fixed bottom-6 left-6 z-[200] bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white/70 hover:text-white px-5 py-3 rounded-2xl flex items-center justify-center gap-3 text-xs sm:text-sm font-black uppercase tracking-widest border border-white/10 shadow-2xl active:scale-95 transition-all"
       title="Quick Exit (Esc 3x)"
     >
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-      </svg>
+      <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
       <span>Quick Exit</span>
     </motion.button>
   );

@@ -64,7 +64,7 @@ export default function AuthForm() {
               placeholder="Username"
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 rounded-xl border border-red-500/30 bg-black/40 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full px-4 py-3 rounded-xl border border-red-500/30 bg-black/40 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500"
             />
           )}
           <input
@@ -73,7 +73,7 @@ export default function AuthForm() {
             placeholder="Email"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 rounded-xl border border-red-500/30 bg-black/40 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full px-4 py-3 rounded-xl border border-red-500/30 bg-black/40 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500"
           />
           <input
             type="password"
@@ -81,11 +81,11 @@ export default function AuthForm() {
             placeholder="Password"
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 rounded-xl border border-red-500/30 bg-black/40 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full px-4 py-3 rounded-xl border border-red-500/30 bg-black/40 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-red-500"
           />
           <button
             type="submit"
-            className="w-full py-2 bg-gradient-to-r from-red-700 to-red-900 text-white rounded-xl hover:from-red-600 hover:to-red-800 shadow-lg hover:shadow-red-500/30 transition-all"
+            className="w-full py-4 bg-gradient-to-r from-red-700 to-red-900 text-white rounded-xl hover:from-red-600 hover:to-red-800 shadow-lg hover:shadow-red-500/30 transition-all font-bold"
           >
             {isLogin ? "Login" : "Register"}
           </button>

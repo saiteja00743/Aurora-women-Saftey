@@ -9,31 +9,36 @@ export default function AuthPage({ onBack }) {
   if (showDashboard) return <Dashboard />;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 60 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -40 }}
-      transition={{ duration: 0.8 }}
-      className="min-h-screen flex flex-col justify-center items-center aurora-bg px-6"
-    >
-      <h1 className="text-5xl font-bold text-white mb-4">
-        Welcome to Aurora
-      </h1>
+    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 aurora-bg text-white">
+      <div className="max-w-xl mx-auto flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-10"
+        >
+          <h1 className="text-4xl sm:text-6xl font-black mb-4 tracking-tighter uppercase">
+            JOIN US
+          </h1>
+          <p className="text-white/60 text-base sm:text-lg font-medium">
+            Login or create an account to begin your journey toward empowerment and safety.
+          </p>
+        </motion.div>
 
-      <p className="text-white/70 mb-10 max-w-xl text-center">
-        Login or create an account to begin your journey toward empowerment and safety.
-      </p>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-2xl p-8 sm:p-12 w-full"
+        >
+          <AuthForm />
+        </motion.div>
 
-      <div className="bg-black/50 backdrop-blur-lg border border-red-500/30 rounded-3xl shadow-2xl p-8 w-full max-w-md">
-        <AuthForm />
+        <button
+          onClick={onBack}
+          className="mt-12 text-white/40 hover:text-white font-black text-xs uppercase tracking-[0.2em] transition-colors"
+        >
+          ← Back to Home
+        </button>
       </div>
-
-      <button
-        onClick={onBack}
-        className="mt-8 underline text-red-400 hover:text-red-300 transition-colors"
-      >
-        ← Back to Home
-      </button>
-    </motion.div>
+    </div>
   );
 }

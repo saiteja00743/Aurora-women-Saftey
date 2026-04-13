@@ -47,93 +47,88 @@ export default function LawBot() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="min-h-screen flex flex-col justify-center items-center aurora-bg px-6 py-14 text-white"
-    >
-      {/* MAIN CHATBOT CARD */}
-      <motion.div
-        initial={{ y: 40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="bg-black/50 backdrop-blur-xl border border-red-500/30 
-                 rounded-3xl shadow-2xl p-10 w-full max-w-3xl"
-      >
-        <h1 className="text-4xl font-bold text-white text-center mb-3">
-          LawBot: Women’s Legal Assistant
-        </h1>
-
-        <p className="text-center text-white/70 mb-6">
-          Ask questions about women’s rights, legal protections & safety in India.
-        </p>
-
-        {/* INPUT + ASK BUTTON */}
-        <div className="flex items-center space-x-3 mb-6">
-          <input
-            type="text"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Type your question here..."
-            className="flex-1 px-4 py-3 rounded-xl bg-black/40 text-white 
-                     placeholder-white/50 shadow-md border border-red-500/30
-                     focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-
-          <button
-            onClick={() => handleAsk()}
-            disabled={loading}
-            className="px-6 py-3 bg-gradient-to-r from-red-700 to-red-900 
-                     text-white rounded-xl font-semibold shadow-md 
-                     hover:scale-105 transition disabled:opacity-40"
-          >
-            {loading ? "Thinking..." : "Ask"}
-          </button>
-        </div>
-
-        {/* FLOATING SUGGESTIONS */}
+    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 aurora-bg text-white">
+      <div className="max-w-4xl mx-auto flex flex-col items-center">
+        {/* Header */}
         <motion.div
-          className="flex flex-wrap justify-center gap-3 mb-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           className="text-center mb-10"
         >
-          {suggestions.map((s, i) => (
-            <motion.button
-              key={i}
-              onClick={() => {
-                setQuestion(s);
-                handleAsk(s);
-              }}
-              whileHover={{ scale: 1.05 }}
-              className="px-4 py-2 text-sm bg-black/40 text-white 
-                       rounded-full border border-red-500/30 
-                       hover:bg-red-900/40 transition-all shadow-sm"
+          <h1 className="text-4xl sm:text-5xl font-black mb-4 tracking-tighter uppercase">
+            LawBot
+          </h1>
+          <p className="text-white/60 font-medium max-w-xl">
+            Your private legal companion for rights and protection laws in India.
+          </p>
+        </motion.div>
+
+        {/* Chat Interface */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="w-full bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-2xl p-6 sm:p-10 flex flex-col gap-8"
+        >
+          {/* Input Section */}
+          <div className="flex flex-col sm:row items-stretch gap-4">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleAsk()}
+                placeholder="Ask about your rights..."
+                className="w-full px-6 py-5 rounded-2xl border border-white/5 bg-white/5 text-white placeholder-white/20 focus:ring-2 focus:ring-red-600 outline-none transition-all"
+              />
+            </div>
+            <button
+              onClick={() => handleAsk()}
+              disabled={loading}
+              className="sm:w-32 py-5 bg-gradient-to-r from-red-600 to-red-800 text-white font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-red-600/20 active:scale-[0.98] transition-all disabled:opacity-50"
             >
-              {s}
-            </motion.button>
-          ))}
+              {loading ? "..." : "Ask"}
+            </button>
+          </div>
+
+          {/* Suggestions */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {suggestions.map((s, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setQuestion(s);
+                  handleAsk(s);
+                }}
+                className="px-4 py-2 text-[10px] sm:text-xs font-black uppercase tracking-[0.1em] bg-white/5 border border-white/5 rounded-full hover:bg-white/10 hover:border-red-500/30 transition-all text-white/60 hover:text-white"
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {/* Response area */}
+          <div className="mt-4">
+            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-red-500 mb-4 px-2">
+              Response
+            </h3>
+            <div className="min-h-[200px] p-6 sm:p-8 bg-black/40 rounded-3xl border border-white/5 text-white/80 leading-relaxed font-medium">
+              {loading ? (
+                <div className="flex items-center gap-3 animate-pulse">
+                  <div className="w-2 h-2 rounded-full bg-red-600"></div>
+                  <span>LawBot is reviewing the law...</span>
+                </div>
+              ) : response || "I am here to help you understand your legal rights. Ask me anything."}
+            </div>
+          </div>
         </motion.div>
 
-        {/* AI RESPONSE BOX */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="bg-black/40 p-5 rounded-xl min-h-[140px] border border-red-500/20 text-white/90 shadow-inner"
-        >
-          {loading ? "LawBot is typing..." : response || "Your answer will appear here."}
-        </motion.div>
-      </motion.div>
-
-      {/* CENTERED BACK BUTTON — MATCHES COMPLAINT FORM */}
-      <div className="text-center mt-8">
-        <button
+        <motion.button
           onClick={() => navigate("/dashboard")}
-          className="text-red-400 hover:text-red-300 underline text-sm font-medium transition"
+          className="mt-12 text-white/40 hover:text-white font-black text-xs uppercase tracking-[0.2em] transition-colors"
         >
           ← Back to Dashboard
-        </button>
+        </motion.button>
       </div>
-    </motion.div>
+    </div>
   );
-
 }

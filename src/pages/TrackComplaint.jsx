@@ -51,107 +51,102 @@ export default function TrackComplaint() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="min-h-screen flex flex-col justify-center items-center text-center px-6 aurora-bg text-white"
-    >
-      <motion.h1
-        className="text-4xl font-bold text-white mb-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        Track Your Complaint
-      </motion.h1>
-
-      <motion.p
-        className="text-white/80 mb-8 max-w-md text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-      >
-        Enter your secure Tracking ID below to check the real-time status of your complaint safely and privately.
-      </motion.p>
-
-      <form
-        onSubmit={handleTrack}
-        className="bg-black/50 backdrop-blur-lg border border-red-500/30 rounded-3xl shadow-2xl p-8 w-full max-w-md text-left"
-      >
-        <label className="block mb-2 text-red-400 font-medium">Tracking ID:</label>
-        <input
-          type="text"
-          value={trackingId}
-          onChange={(e) => setTrackingId(e.target.value)}
-          placeholder="e.g. 12 or #12"
-          className="w-full mb-4 px-4 py-3 rounded-xl border border-red-500/30 bg-black/40 text-white placeholder-white/40 focus:ring-2 focus:ring-red-500 outline-none text-center tracking-widest text-lg font-mono"
-        />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-3 mt-2 bg-gradient-to-r from-red-700 to-red-900 text-white font-medium rounded-xl hover:from-red-600 hover:to-red-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
+    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 aurora-bg text-white">
+      <div className="max-w-2xl mx-auto flex flex-col items-center">
+        {/* Header */}
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           className="text-center mb-10"
         >
-          {loading ? "Tracking..." : "Check Status"}
-        </button>
+          <h1 className="text-4xl sm:text-5xl font-black mb-4 tracking-tighter uppercase text-center">
+            Track Status
+          </h1>
+          <p className="text-white/60 font-medium text-center">
+            Enter your secure Tracking ID to check your complaint status.
+          </p>
+        </motion.div>
 
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            className="mt-4 text-center text-red-400 bg-red-900/20 p-3 rounded-xl border border-red-500/30 text-sm"
-          >
-            {error}
-          </motion.div>
-        )}
-
-        <AnimatePresence>
-          {complaintStatus && (
-            <motion.div
-              initial={{ opacity: 0, y: 10, height: 0 }}
-              animate={{ opacity: 1, y: 0, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="mt-6 pt-6 border-t border-red-500/30"
+        {/* Search Card */}
+        <motion.div
+           initial={{ opacity: 0, scale: 0.95 }}
+           animate={{ opacity: 1, scale: 1 }}
+           className="w-full bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-2xl p-8 sm:p-12 mb-8"
+        >
+          <form onSubmit={handleTrack} className="flex flex-col gap-6">
+            <div>
+               <label className="block mb-4 text-xs font-black uppercase tracking-widest text-red-500 text-center">
+                 Tracking ID
+               </label>
+               <input
+                 type="text"
+                 value={trackingId}
+                 onChange={(e) => setTrackingId(e.target.value)}
+                 placeholder="#0000"
+                 className="w-full px-6 py-5 rounded-2xl border border-white/5 bg-white/5 text-white placeholder-white/20 focus:ring-2 focus:ring-red-600 outline-none transition-all text-center text-2xl font-black tracking-widest"
+               />
+            </div>
+            
+            <button
+               type="submit"
+               disabled={loading}
+               className="w-full py-5 bg-gradient-to-r from-red-600 to-red-800 text-white font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-red-600/20 active:scale-[0.98] transition-all disabled:opacity-50"
             >
-              <h3 className="text-xl font-bold text-center mb-4">Complaint Status</h3>
-              
-              <div className="space-y-4">
-                <div className="flex justify-between items-center bg-black/40 p-3 rounded-lg border border-white/10">
-                  <span className="text-white/60">Complaint ID</span>
-                  <span className="font-mono text-lg font-bold">#{complaintStatus.id}</span>
-                </div>
-                
-                <div className="flex justify-between items-center bg-black/40 p-3 rounded-lg border border-white/10">
-                  <span className="text-white/60">Current Status</span>
-                  <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                    complaintStatus.status === 'Pending' 
-                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
-                      : 'bg-green-500/20 text-green-400 border border-green-500/30'
-                  }`}>
-                    {complaintStatus.status === 'Pending' ? '⏳ Pending Review' : '✅ Reviewed by Authorities'}
-                  </span>
-                </div>
+              {loading ? "Checking..." : "Check Status"}
+            </button>
+            
+            {error && (
+               <motion.div
+                 initial={{ opacity: 0 }}
+                 animate={{ opacity: 1 }}
+                 className="text-center text-red-400 text-sm font-bold bg-red-500/10 py-3 rounded-xl border border-red-500/20"
+               >
+                 {error}
+               </motion.div>
+            )}
+          </form>
 
-                <div className="flex justify-between items-center bg-black/40 p-3 rounded-lg border border-white/10">
-                  <span className="text-white/60">Submitted On</span>
-                  <span className="text-sm font-medium">{formatDate(complaintStatus.created_at)}</span>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </form>
+          {/* Results Area */}
+          <AnimatePresence>
+            {complaintStatus && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mt-10 pt-10 border-t border-white/5 flex flex-col gap-4"
+              >
+                 <div className="flex justify-between items-center bg-white/5 p-5 rounded-2xl border border-white/5">
+                   <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Status</span>
+                   <span className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest ${
+                     complaintStatus.status === 'Pending' 
+                       ? 'bg-amber-500/20 text-amber-500 border border-amber-500/10' 
+                       : 'bg-green-500/20 text-green-500 border border-green-500/10'
+                   }`}>
+                     {complaintStatus.status}
+                   </span>
+                 </div>
 
-      <motion.button
-        onClick={() => navigate("/dashboard")}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ duration: 0.2 }}
-        className="mt-8 text-red-400 font-medium underline text-sm hover:text-red-300"
-      >
-        ← Back to Dashboard
-      </motion.button>
-    </motion.div>
+                 <div className="flex justify-between items-center bg-white/5 p-5 rounded-2xl border border-white/5">
+                   <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Submitted</span>
+                   <span className="text-sm font-bold">{formatDate(complaintStatus.created_at)}</span>
+                 </div>
+
+                 <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-white/40 block mb-2">Subject</span>
+                    <p className="text-base font-bold">{complaintStatus.complaint_title}</p>
+                 </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        <motion.button
+          onClick={() => navigate("/dashboard")}
+          className="mt-8 text-white/40 hover:text-white font-black text-xs uppercase tracking-[0.2em] transition-colors"
+        >
+          ← Back to Dashboard
+        </motion.button>
+      </div>
+    </div>
   );
 }

@@ -13,6 +13,7 @@ import TrackComplaint from "./pages/TrackComplaint.jsx";
 import Helplines from "./pages/Helplines.jsx";
 import SOSButton from "./components/SOSButton.jsx";
 import QuickExit from "./components/QuickExit.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 function EntryFlow() {
   const [showAuth, setShowAuth] = useState(false);
@@ -36,6 +37,7 @@ export default function App() {
   return (
     <Router>
       <div className="aurora-bg min-h-screen text-white">
+        <Navbar />
         <Routes>
           {/* Entry flow (landing + auth) */}
           <Route path="/" element={<EntryFlow />} />

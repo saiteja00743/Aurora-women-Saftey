@@ -85,74 +85,91 @@ export default function Therapist() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="min-h-screen aurora-bg flex flex-col items-center p-6"
-    >
-      <h1 className="text-4xl font-bold text-white mb-4">
-        AI Therapist
-      </h1>
-      <p className="text-white/70 mb-6">
-  A safe space to talk, breathe, and feel heard.
-</p>
+    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 aurora-bg text-white">
+      <div className="max-w-3xl mx-auto flex flex-col items-center h-[calc(100vh-120px)]">
+        {/* Header */}
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           className="text-center mb-6"
+        >
+          <h1 className="text-4xl sm:text-5xl font-black mb-2 tracking-tighter uppercase">
+            Therapist
+          </h1>
+          <p className="text-white/60 font-medium">
+            A safe, private space to breathe and heal.
+          </p>
+        </motion.div>
 
-
-      {/* 💬 Chat Box */}
-      <div className="w-full max-w-2xl bg-black/40 backdrop-blur-xl rounded-2xl p-4 mb-4 overflow-y-auto h-[60vh]">
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={`mb-3 ${
-              m.role === "user" ? "text-right" : "text-left"
-            }`}
-          >
-            <span
-              className={`inline-block px-4 py-2 rounded-xl ${
-                m.role === "user"
-                  ? "bg-red-700 text-white"
-                  : "bg-black/60 border border-red-500/30 text-white"
-              }`}
-            >
-              {m.text}
-            </span>
+        {/* Chat Box */}
+        <div className="flex-1 w-full bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col">
+          <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-4 no-scrollbar">
+            {messages.length === 0 && (
+               <div className="h-full flex flex-col items-center justify-center text-white/20 text-center p-10">
+                 <span className="text-6xl mb-4">🌿</span>
+                 <p className="font-black uppercase tracking-widest text-xs">Start your healing journey</p>
+               </div>
+            )}
+            {messages.map((m, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: m.role === "user" ? 20 : -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+              >
+                <div
+                  className={`max-w-[85%] px-6 py-4 rounded-[2rem] text-sm sm:text-base font-medium shadow-xl ${
+                    m.role === "user"
+                      ? "bg-gradient-to-br from-red-600 to-red-800 text-white rounded-tr-none"
+                      : "bg-white/10 border border-white/10 text-white rounded-tl-none"
+                  }`}
+                >
+                  {m.text}
+                </div>
+              </motion.div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* 📝 Input + Mic */}
-      <div className="flex gap-2 w-full max-w-2xl">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          placeholder="Talk or type how you feel..."
-          className="flex-1 px-4 py-2 rounded-xl outline-none bg-black/40 border border-red-500/30 text-white placeholder-white/50 focus:ring-2 focus:ring-red-500"
-        />
+          {/* Input Area */}
+          <div className="p-4 sm:p-6 bg-black/40 border-t border-white/5">
+            <div className="flex gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                placeholder="How are you feeling?"
+                className="flex-1 px-6 py-4 rounded-2xl bg-white/5 border border-white/5 text-white placeholder-white/20 focus:ring-2 focus:ring-red-600 outline-none transition-all"
+              />
+              <button
+                onClick={startListening}
+                className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors"
+                title="Voice Input"
+              >
+                🎙️
+              </button>
+              <button
+                onClick={sendMessage}
+                className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-800 text-white font-black uppercase tracking-widest rounded-2xl shadow-xl active:scale-95 transition-all"
+              >
+                Send
+              </button>
+            </div>
+            <button
+               onClick={clearChat}
+               className="mt-4 text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-red-500 transition-colors mx-auto block"
+            >
+              Clear Conversation
+            </button>
+          </div>
+        </div>
 
-        <button
-          onClick={startListening}
-          className="px-3 py-2 bg-red-900/50 text-white border border-red-500/30 hover:bg-red-800/50 rounded-xl transition"
+        <motion.button
+          onClick={() => navigate("/dashboard")}
+          className="mt-8 text-white/40 hover:text-white font-black text-xs uppercase tracking-[0.2em] transition-colors"
         >
-          🎙️
-        </button>
-
-        <button
-          onClick={sendMessage}
-          className="px-4 py-2 bg-gradient-to-r from-red-700 to-red-900 hover:from-red-600 hover:to-red-800 text-white rounded-xl transition"
-        >
-          Send
-        </button>
+          ← Back to Dashboard
+        </motion.button>
       </div>
-       <div className="text-center mt-8">
-      <button
-        onClick={() => navigate("/dashboard")}
-        className="text-red-400 hover:text-red-300 underline text-sm font-medium transition"
-      >
-        ← Back to Dashboard
-      </button>
     </div>
-    </motion.div>
   );
 }
